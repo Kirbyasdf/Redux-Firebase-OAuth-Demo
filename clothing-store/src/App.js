@@ -10,7 +10,6 @@ import Header from "./components/header/Header";
 import HomePage from "./pages/homepage/HomePage.js";
 import ShopPage from "./pages/shop/ShopPage.js";
 import SignUpSignIn from "./pages/sign-up-sign-in/SignUpSignIn";
-import SignUp from "./components/sign-up/SignUp";
 
 function App({ setCurrentUser, currentUser }) {
   useEffect(() => {
