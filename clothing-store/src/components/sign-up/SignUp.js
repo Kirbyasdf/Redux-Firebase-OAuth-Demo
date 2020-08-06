@@ -22,7 +22,7 @@ const SignUp = () => {
       await createUserProfileDocument(user, { displayName });
       setInfo({ displayName: "", email: "", password: "", confirmPassword: "" });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
