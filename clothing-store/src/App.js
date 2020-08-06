@@ -8,7 +8,7 @@ import HomePage from "./pages/homepage/HomePage.js";
 import ShopPage from "./pages/shop/ShopPage.js";
 import SignUpSignIn from "./pages/sign-up-sign-in/SignUpSignIn";
 
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -16,13 +16,28 @@ function App() {
   let unsubscribeFromAuth = null;
 
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const asyncFunc = async (userAuth) => {
+          const userRef = await createUserProfileDocument(userAuth);
+          userRef.onSnapshot((snapShot) => {
+            setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+          });
+        };
+        asyncFunc(userAuth);
+      }
+      setCurrentUser(userAuth);
     });
     return function cleanup() {
       unsubscribeFromAuth();
     };
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser);
+    }
+  }, [currentUser]);
 
   return (
     <div className="App">
