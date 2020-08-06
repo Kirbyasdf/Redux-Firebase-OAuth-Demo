@@ -33,8 +33,8 @@ function App() {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser);
     }
+    console.log(currentUser);
   }, [currentUser]);
 
   return (
