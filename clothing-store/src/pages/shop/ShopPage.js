@@ -6,7 +6,6 @@ import CollectionPreview from "../../components/collection-preview/CollectionPre
 
 const ShopPage = () => {
   const [collections] = useState(SHOP_DATA);
-  console.log(collections);
   return (
     <div className="shop-page">
       {collections.map(({ id, ...otherCollectionProps }) => (
