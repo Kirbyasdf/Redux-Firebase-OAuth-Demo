@@ -3,12 +3,15 @@ import "./App.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
-
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/user/user.selector";
 
 import Header from "./components/header/Header";
 import HomePage from "./pages/homepage/HomePage.js";
 import ShopPage from "./pages/shop/ShopPage.js";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
 import SignUpSignIn from "./pages/sign-up-sign-in/SignUpSignIn";
 
 function App({ setCurrentUser, currentUser }) {
@@ -36,14 +39,15 @@ function App({ setCurrentUser, currentUser }) {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/shop" component={ShopPage} />
+        <Route excact path="/checkout" component={CheckoutPage} />
         <Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignUpSignIn />)} />
       </Switch>
     </div>
   );
 }
 
-const msp = ({ user }) => ({
-  currentUser: user.currentUser,
+const msp = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 const mdp = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
